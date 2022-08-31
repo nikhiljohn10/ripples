@@ -1,0 +1,83 @@
+version: '3.9'
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    hostname: prometheus
+    restart: unless-stopped
+    command: >
+      --config.file=/etc/prometheus/prometheus.yml
+      --storage.tsdb.path=/prometheus
+      --web.console.libraries=/etc/prometheus/console_libraries
+      --web.console.templates=/etc/prometheus/consoles
+      --storage.tsdb.retention.time=200h
+      --web.enable-lifecycle
+    environment:
+      GF_INSTALL_PLUGINS: prometheus-clock-panel,prometheus-simple-json-datasource
+    expose:
+      - 9090
+    volumes:
+      - prometheus-config:/etc/prometheus
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    labels:
+      org.label-schema.group: "monitoring"
+    networks:
+      - docker-networks
+
+  node-exporter:
+    image: prom/node-exporter:latest
+    container_name: node-exporter
+    hostname: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command: >
+      --path.procfs=/host/proc
+      --path.rootfs=/rootfs
+      --path.sysfs=/host/sys
+      --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+    expose:
+      - 9100
+    depends_on:
+      - prometheus
+    labels:
+      org.label-schema.group: "monitoring"
+    networks:
+      - docker-networks
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    container_name: grafana
+    hostname: grafana
+    restart: unless-stopped
+    user: '104'
+    environment:
+      GF_INSTALL_PLUGINS: grafana-clock-panel,grafana-simple-json-datasource
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: Grafana@1234
+      GF_USERS_ALLOW_SIGN_UP: false
+    ports:
+      - 30000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - grafana-provisioning:/etc/grafana/provisioning
+    depends_on:
+      - prometheus
+    labels:
+      org.label-schema.group: "monitoring"
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  prometheus-data:
+  prometheus-config:
+  grafana-data:
+  grafana-provisioning:

@@ -1,0 +1,106 @@
+version: '3.9'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    hostname: mongo
+    restart: unless-stopped
+    # environment:
+    #   MONGO_INITDB_DATABASE: mongodb
+    #   MONGO_INITDB_ROOT_USERNAME: mongo
+    #   MONGO_INITDB_ROOT_PASSWORD: Mongodb12345
+    entrypoint: >
+      mongod
+        --replSet mongoReplicaSet
+        --bind_ip localhost,mongo
+    volumes:
+      - mongo-lib:/var/lib/mongodb
+      - mongo-config:/data/configdb
+      - mongo-data:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - docker-networks
+
+  mongo-1:
+    image: mongo:latest
+    container_name: mongo-1
+    hostname: mongo-1
+    restart: unless-stopped
+    # environment:
+    #   MONGO_INITDB_DATABASE: mongodb
+    #   MONGO_INITDB_ROOT_USERNAME: mongo
+    #   MONGO_INITDB_ROOT_PASSWORD: Mongodb12345
+    entrypoint: >
+      mongod
+        --replSet mongoReplicaSet
+        --bind_ip localhost,mongo-1
+    volumes:
+      - mongo-1-lib:/var/lib/mongodb
+      - mongo-1-config:/data/configdb
+      - mongo-1-data:/data/db
+    ports:
+      - 27018:27017
+    networks:
+      - docker-networks
+
+  mongo-2:
+    image: mongo:latest
+    container_name: mongo-2
+    hostname: mongo-2
+    restart: unless-stopped
+    # environment:
+    #   MONGO_INITDB_DATABASE: mongodb
+    #   MONGO_INITDB_ROOT_USERNAME: mongo
+    #   MONGO_INITDB_ROOT_PASSWORD: Mongodb12345
+    entrypoint: >
+      mongod
+        --replSet mongoReplicaSet
+        --bind_ip localhost,mongo-2
+    volumes:
+      - mongo-2-lib:/var/lib/mongodb
+      - mongo-2-config:/data/configdb
+      - mongo-2-data:/data/db
+    ports:
+      - 27019:27017
+    networks:
+      - docker-networks
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    hostname: mongo-express
+    restart: on-failure
+    environment:
+      NODE_OPTIONS: --unhandled-rejections=strict
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: MongoAdmin12
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.5.4
+      ME_CONFIG_OPTIONS_EDITORTHEME: monokai
+        # https://codemirror.net/5/demo/theme.html
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+      - mongo-1
+      - mongo-2
+    networks:
+      - docker-networks
+    links: 
+        - mongo:mongo
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  mongo-lib:
+  mongo-config:
+  mongo-data:
+  mongo-1-lib:
+  mongo-1-config:
+  mongo-1-data:
+  mongo-2-lib:
+  mongo-2-config:
+  mongo-2-data:

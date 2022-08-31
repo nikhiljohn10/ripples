@@ -1,0 +1,78 @@
+version: '3.9'
+
+services:
+  roach:
+    image: cockroachdb/cockroach:latest
+    container_name: roach
+    hostname: roach
+    command: >
+      start
+        --insecure
+        --accept-sql-without-tls
+        --join=roach,roach-1,roach-2,roach-3,roach-4
+    restart: on-failure
+    volumes:
+      - roach-data:/cockroach/cockroach-data
+    ports:
+      - 26257:26257
+      - 20000:8080
+    networks:
+      - docker-networks
+
+  roach-1:
+    image: cockroachdb/cockroach:latest
+    container_name: roach-1
+    hostname: roach-1
+    command: >
+      start
+        --insecure
+        --join=roach,roach-1,roach-2,roach-3,roach-4
+    restart: on-failure
+    volumes:
+      - roach-1-data:/cockroach/cockroach-data
+    depends_on:
+      - roach
+    networks:
+      - docker-networks
+
+  roach-2:
+    image: cockroachdb/cockroach:latest
+    container_name: roach-2
+    hostname: roach-2
+    command: >
+      start
+        --insecure
+        --join=roach,roach-1,roach-2,roach-3,roach-4
+    restart: on-failure
+    volumes:
+      - roach-2-data:/cockroach/cockroach-data
+    depends_on:
+      - roach
+    networks:
+      - docker-networks
+
+  roach-3:
+    image: cockroachdb/cockroach:latest
+    container_name: roach-3
+    hostname: roach-3
+    command: >
+      start
+        --insecure
+        --join=roach,roach-1,roach-2,roach-3,roach-4
+    restart: on-failure
+    volumes:
+      - roach-3-data:/cockroach/cockroach-data
+    depends_on:
+      - roach
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  roach-data:
+  roach-1-data:
+  roach-2-data:
+  roach-3-data:

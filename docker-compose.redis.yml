@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    hostname: redis
+    restart: unless-stopped
+     # Username is 'default'
+     # Password is 'Redis@123456'
+    command: >
+      --requirepass Redis@123456
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - docker-networks
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    container_name: redisinsight
+    hostname: redisinsight
+    restart: unless-stopped
+    ports:
+      - 8001:8001
+    volumes:
+      - redisinsight-data:/db
+    depends_on:
+      - redis
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  redis-data:
+  redisinsight-data:
