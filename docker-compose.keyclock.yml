@@ -1,27 +1,25 @@
 version: '3.9'
 
 services:
-  keyclock:
-    image: quay.io/keycloak/keycloak:19.0.1
-    container_name: keyclock
-    hostname: keyclock
-    restart: unless-stopped
-    volumes:
-      - "./certs:/etc/ssl/certs/localhost"
+  keycloak:
+    build: 
+      context: dockerfiles
+      dockerfile: keycloak.dockerfile
+    image: keycloak:local
+    container_name: keycloak
     command: >
       start
         --optimized
         --https-port=8443
         --hostname=localhost
-        --https-certificate-file=/etc/ssl/certs/localhost/cert.pem
-        --https-certificate-key-file=/etc/ssl/certs/localhost/key.pem
+        --https-key-store-file=/opt/keycloak/conf/server.keystore
+        --https-key-store-password=KeyCloakPassW0rd
     environment:
-      DB_ADDR: postgres
-      DB_DATABASE: keycloak
-      DB_USER: admin
-      DB_PASSWORD: Postgres1234
+      KC_DB_USERNAME: admin
+      KC_DB_PASSWORD: Postgres1234
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
       KEYCLOAK_ADMIN: admin
-      KEYCLOAK_ADMIN_PASSWORD: Keyclock@123
+      KEYCLOAK_ADMIN_PASSWORD: Keycloak@123
     ports:
       - 8443:8443
     networks:

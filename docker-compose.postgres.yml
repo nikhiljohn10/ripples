@@ -8,7 +8,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: Postgres1234
-      POSTGRES_DB: keyclock # Change this to required db
+      POSTGRES_DB: keycloak # Change this to required db name
     restart: unless-stopped
     volumes:
       - pg-data:/var/lib/postgresql/data
