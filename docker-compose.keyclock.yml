@@ -3,25 +3,20 @@ version: '3.9'
 services:
   keycloak:
     build: 
-      context: dockerfiles
+      context: Dockerfiles
       dockerfile: keycloak.dockerfile
     image: keycloak:local
     container_name: keycloak
+    restart: on-failure
     command: >
       start
         --optimized
-        --https-port=8443
-        --hostname=localhost
-        --https-key-store-file=/opt/keycloak/conf/server.keystore
-        --https-key-store-password=KeyCloakPassW0rd
+        --https-port=50443
     environment:
-      KC_DB_USERNAME: admin
-      KC_DB_PASSWORD: Postgres1234
-      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Keycloak@123
     ports:
-      - 8443:8443
+      - 50443:50443
     networks:
       - docker-networks
 
