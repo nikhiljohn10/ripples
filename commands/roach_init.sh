@@ -1,4 +1,14 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
+DOCKER_COMPOSE_FILE="docker-compose.roach.yml"
+
+if test "$1" = "-f"; then
+    clear && \
+    docker compose -f $DOCKER_COMPOSE_FILE down 2>/dev/null && \
+    docker volume prune -f
+fi
+
+docker compose -f $DOCKER_COMPOSE_FILE up -d || exit 1
 
 docker exec roach ./cockroach init --insecure
 cat << EOF

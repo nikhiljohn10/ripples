@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-if test "$1" = "-f"; then
-    clear && \
-    docker compose -f "docker-compose.mongo.yml" down && \
-    docker volume prune -f
-fi
-
 SECRETS_DIR="secrets"
 DOCKER_COMPOSE_FILE="docker-compose.mongo.yml"
 REPLICATION_KEY_FILE="$SECRETS_DIR/mongo-replication.key"
@@ -20,6 +14,12 @@ CLUSTER_NAME="mReplSet"
 PRIMARY_CLUSTER="mongo:27017"
 SECONDARY_CLUSTER_1="mongo-1:27017"
 SECONDARY_CLUSTER_2="mongo-2:27017"
+
+if test "$1" = "-f"; then
+    clear && \
+    docker compose -f "docker-compose.mongo.yml" down && \
+    docker volume prune -f
+fi
 
 if ! test -f "$REPLICATION_KEY_FILE"; then
     mkdir -p $SECRETS_DIR
