@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-CERT_PATH="certs"
+CERT_PATH="${1:-certs}"
 
 mkdir -p $CERT_PATH
 
