@@ -24,7 +24,7 @@ services:
     hostname: redisinsight
     restart: unless-stopped
     ports:
-      - 8001:8001
+      - 40000:8001
     volumes:
       - redisinsight-data:/db
     depends_on:
