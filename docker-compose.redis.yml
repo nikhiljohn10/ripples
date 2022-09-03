@@ -3,7 +3,7 @@ version: '3.9'
 services:
 
   redis:
-    image: redis:latest
+    image: redis:7.0.4
     container_name: redis
     hostname: redis
     restart: unless-stopped
@@ -19,7 +19,7 @@ services:
       - docker-networks
 
   redisinsight:
-    image: redislabs/redisinsight:latest
+    image: redislabs/redisinsight:1.13.0
     container_name: redisinsight
     hostname: redisinsight
     restart: unless-stopped

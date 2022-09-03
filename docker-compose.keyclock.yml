@@ -5,7 +5,7 @@ services:
     build: 
       context: Dockerfiles
       dockerfile: keycloak.dockerfile
-    image: keycloak:local
+    image: keycloak:19.0.1-local
     container_name: keycloak
     restart: on-failure
     command: >

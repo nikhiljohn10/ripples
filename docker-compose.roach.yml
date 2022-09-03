@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   roach:
-    image: cockroachdb/cockroach:latest
+    image: cockroachdb/cockroach:v22.1.6
     container_name: roach
     hostname: roach
     command: >
@@ -20,7 +20,7 @@ services:
       - docker-networks
 
   roach-1:
-    image: cockroachdb/cockroach:latest
+    image: cockroachdb/cockroach:v22.1.6
     container_name: roach-1
     hostname: roach-1
     command: >
@@ -36,7 +36,7 @@ services:
       - docker-networks
 
   roach-2:
-    image: cockroachdb/cockroach:latest
+    image: cockroachdb/cockroach:v22.1.6
     container_name: roach-2
     hostname: roach-2
     command: >
@@ -52,7 +52,7 @@ services:
       - docker-networks
 
   roach-3:
-    image: cockroachdb/cockroach:latest
+    image: cockroachdb/cockroach:v22.1.6
     container_name: roach-3
     hostname: roach-3
     command: >

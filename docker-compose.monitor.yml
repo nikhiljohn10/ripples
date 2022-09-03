@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   prometheus:
-    image: prom/prometheus:latest
+    image: quay.io/prometheus/prometheus:v2.38.0
     container_name: prometheus
     hostname: prometheus
     restart: unless-stopped
@@ -27,7 +27,7 @@ services:
       - docker-networks
 
   node-exporter:
-    image: prom/node-exporter:latest
+    image: quay.io/prometheus/node-exporter:v1.3.1
     container_name: node-exporter
     hostname: node-exporter
     restart: unless-stopped
@@ -37,9 +37,8 @@ services:
       - /:/rootfs:ro
     command: >
       --path.procfs=/host/proc
-      --path.rootfs=/rootfs
       --path.sysfs=/host/sys
-      --collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)
+      --path.rootfs=/rootfs
     expose:
       - 9100
     depends_on:
@@ -50,7 +49,7 @@ services:
       - docker-networks
 
   grafana:
-    image: grafana/grafana-oss:latest
+    image: grafana/grafana-oss:9.1.2
     container_name: grafana
     hostname: grafana
     restart: unless-stopped

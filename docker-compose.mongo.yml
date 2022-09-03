@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   mongo:
-    image: mongo:5
+    image: mongo:5.0.11
     container_name: mongo
     hostname: mongo
     restart: unless-stopped
@@ -23,7 +23,7 @@ services:
       - docker-networks
 
   mongo-1:
-    image: mongo:5
+    image: mongo:5.0.11
     container_name: mongo-1
     hostname: mongo-1
     restart: unless-stopped
@@ -46,7 +46,7 @@ services:
       - docker-networks
 
   mongo-2:
-    image: mongo:5
+    image: mongo:5.0.11
     container_name: mongo-2
     hostname: mongo-2
     restart: unless-stopped
