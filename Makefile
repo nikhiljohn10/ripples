@@ -22,7 +22,7 @@ roach:
 	@./scripts/roach_init.sh
 
 redis:
-	@docker compose -f "docker-compose.postgres.yml" up -d
+	@docker compose -f "docker-compose.redis.yml" up -d
 
 keyclock:
 	@docker compose -f "docker-compose.keyclock.yml" up -d --build
