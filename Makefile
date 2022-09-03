@@ -1,8 +1,19 @@
 up: postgres mongo roach redis keyclock monitor
 
-down:
-	@-find . -type f -name "docker-compose.*.yml" -exec docker compose -f "$$(basename {})" down \;
+up-fast:
+	@-make postgres
+	@-make mongo &
+	@-make roach &
+	@-make redis &
+	@-make keyclock &
+	@-make monitor &
 
+DC_FILES=$(shell find . -type f -name "docker-compose.*.yml" -exec echo {} +)
+
+down:
+	@for dc_file in $(DC_FILES); do\
+		docker compose -f "$$dc_file" down &\
+	done
 clean:
 	@./scripts/clean_docker.sh
 

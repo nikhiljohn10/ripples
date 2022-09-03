@@ -2,32 +2,52 @@ version: '3.9'
 
 services:
   roach:
-    image: cockroachdb/cockroach:v22.1.6
+    image: cockroachdb:v22.1.6-local
     container_name: roach
     hostname: roach
+    build: 
+      context: Dockerfiles
+      dockerfile: roach.dockerfile
+    environment:
+      NODE_HOSTNAME: roach
     command: >
       start
-        --insecure
-        --accept-sql-without-tls
-        --join=roach,roach-1,roach-2,roach-3,roach-4
+        --certs-dir=certs
+        --cache=.25
+        --max-sql-memory=.25
+        --cluster-name=roach-intrusion
+        --join=roach,roach-1,roach-2
     restart: on-failure
+        # --advertise-addr=roach
     volumes:
       - roach-data:/cockroach/cockroach-data
     ports:
       - 26257:26257
       - 20000:8080
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "-k", "https://localhost:20000"]
+    #   interval: 1m30s
+    #   timeout: 5s
+    #   retries: 2
+    #   start_period: 5s
     networks:
       - docker-networks
 
   roach-1:
-    image: cockroachdb/cockroach:v22.1.6
+    image: cockroachdb:v22.1.6-local
     container_name: roach-1
     hostname: roach-1
+    environment:
+      NODE_HOSTNAME: roach-1
     command: >
       start
-        --insecure
-        --join=roach,roach-1,roach-2,roach-3,roach-4
+        --certs-dir=certs
+        --cache=.25
+        --max-sql-memory=.25
+        --cluster-name=roach-intrusion
+        --join=roach,roach-1,roach-2
     restart: on-failure
+        # --advertise-addr=roach-1
     volumes:
       - roach-1-data:/cockroach/cockroach-data
     depends_on:
@@ -36,32 +56,22 @@ services:
       - docker-networks
 
   roach-2:
-    image: cockroachdb/cockroach:v22.1.6
+    image: cockroachdb:v22.1.6-local
     container_name: roach-2
     hostname: roach-2
+    environment:
+      NODE_HOSTNAME: roach-2
     command: >
       start
-        --insecure
-        --join=roach,roach-1,roach-2,roach-3,roach-4
+        --certs-dir=certs/
+        --cache=.25
+        --max-sql-memory=.25
+        --cluster-name=roach-intrusion
+        --join=roach,roach-1,roach-2
     restart: on-failure
+        # --advertise-addr=roach-2
     volumes:
       - roach-2-data:/cockroach/cockroach-data
-    depends_on:
-      - roach
-    networks:
-      - docker-networks
-
-  roach-3:
-    image: cockroachdb/cockroach:v22.1.6
-    container_name: roach-3
-    hostname: roach-3
-    command: >
-      start
-        --insecure
-        --join=roach,roach-1,roach-2,roach-3,roach-4
-    restart: on-failure
-    volumes:
-      - roach-3-data:/cockroach/cockroach-data
     depends_on:
       - roach
     networks:

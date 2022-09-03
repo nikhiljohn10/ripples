@@ -19,10 +19,10 @@
 | Version          | 14.5                            | 5.0.11                          | v22.1.6                         | 7.0.4                           | 19.0.1                           | 9.1.2                           |
 | Dependency       | None                            | Init Script                     | Init Script                     | None                            | PostgreSQL                       | Prometheus:v2.38.0              |
 | Make command     | `make postgres`                 | `make mongo`                    | `make roach`                    | `make redis`                    | `make keycloak`                  | `make monitor`                  |
-| WebUI Port       | [50000](http://localhost:50000) | [10000](http://localhost:10000) | [20000](http://localhost:20000) | [40000](http://localhost:40000) | [50443](https://localhost:50443) | [30000](http://localhost:30000) |
-| WebUI User/Email | admin@pgadmin.org               | express                         | None                            | None                            | admin                            | admin                           |
-| WebUI Password   | PGAdmin@1234                    | MongoDB@1234                    | None                            | None                            | Keycloak@123                     | Grafana@1234                    |
-| Admin User       | admin                           | admin                           | None                            | default                         | server.keystore                  | None                            |
+| WebUI Port       | [50000](http://localhost:50000) | [10000](http://localhost:10000) | [20000](https://localhost:20000) | [40000](http://localhost:40000) | [50443](https://localhost:50443) | [30000](http://localhost:30000) |
+| WebUI User/Email | admin@pgadmin.org               | express                         | roach                            | None                            | admin                            | admin                           |
+| WebUI Password   | PGAdmin@1234                    | MongoDB@1234                    | Cockroach@12                            | None                            | Keycloak@123                     | Grafana@1234                    |
+| Admin User       | admin                           | admin                           | root                            | default                         | server.keystore                  | None                            |
 | Admin Password   | Postgres1234                    | MongoAdmin12                    | None                            | Redis@123456                    | KeyCloakPassW0rd                 | None                            |
 
 ## PostgreSQL + PG Admin
@@ -53,9 +53,9 @@ Full 3-node cluster is started and initialised with the following command:
 bash scripts/roach_init.sh
 ```
 
- * Web UI: http://localhost:20000
- * Database url: `postgresql://localhost:26257/defaultdb?sslmode=disable`
- * JDBC url: `jdbc:postgresql://localhost:26257/defaultdb?sslmode=disable`
+ * Web UI: https://localhost:20000
+ * Database url: `postgresql://root@roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt`
+ * JDBC url: `jdbc:postgresql://roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&user=root`
  * Cluster Init script: [scripts/roach_init.sh](scripts/roach_init.sh)
  * CockroachDB uses postgres network driver. Hence the urls are similar postgresql url
 
