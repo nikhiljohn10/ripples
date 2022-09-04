@@ -22,7 +22,7 @@ SECONDARY_CLUSTER_2="mongo-2:27017"
 
 # Remove old containers and volumes if `-f` option given
 if test "$1" = "-f"; then
-    docker compose -f "docker-compose.mongo.yml" down && \
+    docker compose -f $DOCKER_COMPOSE_FILE down && \
     docker volume prune -f
 fi
 
