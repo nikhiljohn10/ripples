@@ -26,23 +26,24 @@ docker run --rm -it \
 docker compose -f $DOCKER_COMPOSE_FILE exec roach cockroach \
     init \
     --cluster-name=roach-intrusion \
-    --certs-dir=certs/ || exit 1
+    --certs-dir=certs/ > /dev/null 2>&1 &&
+echo "Cluster is initialized successfully" ||
+echo "Cluster has already been initialized"
 
-# Create admin user
-docker compose -f $DOCKER_COMPOSE_FILE exec roach cockroach \
-    sql \
-    --certs-dir=certs/ \
-    --host=roach \
-    --execute="CREATE USER roach WITH PASSWORD 'Cockroach@12';" > /dev/null 2>&1 &&
-echo "Admin user 'roach' is created successfully" || exit 1
+$(pwd)/scripts/roach_new_user.sh roach -p 'Cockroach123'
 
 cat << EOF
 
-Web UI:       http://localhost:20000
-SQL URL:      postgresql://root@roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt
-SQL (JDBC):   jdbc:postgresql://roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&user=root
-CA cert:      certs/roach/ca.crt
-Client cert:  certs/roach/client.root.crt
-Client key:   certs/roach/client.root.key
+Root access:    cockroach sql --certs-dir=certs/ --host=localhost:26257
+SQL URL:        postgresql://root@localhost:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt
+SQL (JDBC):     jdbc:postgresql://localhost:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&user=root
+CA cert:        certs/roach/ca.crt
+Client cert:    certs/roach/client.root.crt
+Client key:     certs/roach/client.root.key
+
+Web UI:         https://localhost:20000
+Username:       roach
+Password:       Cockroach123
+Database url:   postgresql://roach:Cockroach123@localhost:26257/exampledb?sslmode=verify-full&options=--cluster%3Droach-intrusion
 
 EOF

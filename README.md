@@ -21,7 +21,7 @@
 | Make command     | `make postgres`                 | `make mongo`                    | `make roach`                    | `make redis`                    | `make keycloak`                  | `make monitor`                  |
 | WebUI Port       | [50000](http://localhost:50000) | [10000](http://localhost:10000) | [20000](https://localhost:20000) | [40000](http://localhost:40000) | [50443](https://localhost:50443) | [30000](http://localhost:30000) |
 | WebUI User/Email | admin@pgadmin.org               | express                         | roach                            | None                            | admin                            | admin                           |
-| WebUI Password   | PGAdmin@1234                    | MongoDB@1234                    | Cockroach@12                            | None                            | Keycloak@123                     | Grafana@1234                    |
+| WebUI Password   | PGAdmin@1234                    | MongoDB@1234                    | Cockroach123                            | None                            | Keycloak@123                     | Grafana@1234                    |
 | Admin User       | admin                           | admin                           | root                            | default                         | server.keystore                  | None                            |
 | Admin Password   | Postgres1234                    | MongoAdmin12                    | None                            | Redis@123456                    | KeyCloakPassW0rd                 | None                            |
 
@@ -43,7 +43,9 @@ bash scripts/mongo_init.sh
  * Database url: `mongodb://admin:MongoAdmin12@localhost:10001/test`
  * Primary cluster: `localhost:10001`
  * Secondary clusters: `localhost:10002`,`localhost:10003`
- * Cluster Init script: [scripts/mongo_init.sh](scripts/mongo_init.sh) (Use option `-f` to start a fresh container)
+ * Cluster Init script: [scripts/mongo_init.sh](scripts/mongo_init.sh)
+   * Use option `-f` to start a fresh container
+ * Production ready
 
 ## CockroachDB Cluster
 
@@ -57,7 +59,13 @@ bash scripts/roach_init.sh
  * Database url: `postgresql://root@roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt`
  * JDBC url: `jdbc:postgresql://roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&user=root`
  * Cluster Init script: [scripts/roach_init.sh](scripts/roach_init.sh)
+   * Use option `-f` to start a fresh container
+ * New user script: [scripts/roach_new_user.sh](scripts/roach_new_user.sh)
+   * Usage: `scripts/roach_new_user.sh [SQL_USER] [-d|-p [PASSWORD]]`
+   * `-d` option remove the user. Throws error is any database exists owned by this user.
+   * `-p [PASSWORD]` options take password from user as argument. If not passed in argument, password is prompted.
  * CockroachDB uses postgres network driver. Hence the urls are similar postgresql url
+ * Production ready
 
 ## Redis + RedisInsight
 
