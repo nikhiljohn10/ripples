@@ -34,7 +34,7 @@ else
         -e NEW_SQL_USER=$USER_NAME \
         -e HOST_UID=$(id -u $(whoami)) \
         -e HOST_GID=$(id -g $(whoami)) \
-        -v $(pwd)/certs/roach:/cockroach/temp_certs:rw \
+        -v $(pwd)/certs:/cockroach/temp_certs:rw \
         --entrypoint bash cockroachdb:v22.1.6-local -c \
             'cockroach cert create-client $NEW_SQL_USER \
                 --certs-dir=certs/ \

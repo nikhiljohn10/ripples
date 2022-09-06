@@ -16,9 +16,6 @@ WORKDIR /opt/keycloak
 # for demonstration purposes only, please make sure to use proper certificates in production instead
 RUN keytool -genkeypair -storepass KeyCloakPassW0rd -storetype PKCS12 -keyalg RSA -keysize 2048 -dname "CN=server" -alias server -ext "SAN:c=DNS:localhost,IP:127.0.0.1" -keystore conf/server.keystore
 
-ENV KC_DB_USERNAME=admin
-ENV KC_DB_PASSWORD=Postgres1234
-ENV KC_DB_URL=jdbc:postgresql://postgres:5432/keycloak
 ENV KC_HOSTNAME=localhost
 ENV KC_HTTPS_KEY_STORE_FILE=/opt/keycloak/conf/server.keystore
 ENV KC_HTTPS_KEY_STORE_PASSWORD=KeyCloakPassW0rd

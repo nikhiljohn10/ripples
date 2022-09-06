@@ -2,9 +2,7 @@ version: '3.9'
 
 services:
   keycloak:
-    build: 
-      context: Dockerfiles
-      dockerfile: keycloak.dockerfile
+    build: .
     image: keycloak:19.0.1-local
     container_name: keycloak
     restart: on-failure
@@ -12,6 +10,9 @@ services:
       start
         --optimized
         --https-port=50443
+        --db-username=admin
+        --db-password=Postgres1234
+        --db-url=jdbc:postgresql://postgres:5432/keycloak
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Keycloak@123
