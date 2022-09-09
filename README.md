@@ -1,15 +1,14 @@
 # Ripples
 
-## Contents
+## Services
 
- * [Summary](#summary)
- * [PostgreSQL + PG Admin](#postgresql--pg-admin)
- * [Mongo Cluster + Monog Express](#mongo-cluster--monog-express)
- * [CockroachDB Cluster](#cockroachdb-cluster)
- * [Redis + RedisInsight](#redis--redisinsight)
- * [Keycloak](#keycloak)
- * [Monitoring (Prometheus + Grafana)](#monitoring-prometheus--grafana)
- * [Other scripts](#other-scripts)
+ * [PostgreSQL + PG Admin](/postgresql)
+ * [Mongo Cluster + Monog Express](/mongodb)
+ * [CockroachDB Cluster](/cockroachdb)
+ * [Redis + RedisInsight](/redis)
+ * [Keycloak](/keycloak)
+ * [Monitoring (Prometheus + Grafana)](/monitor)
+ * [Docker Registry](/registry)
 
 ## Summary
 
@@ -25,66 +24,7 @@
 | Admin User       | admin                           | admin                           | root                            | default                         | server.keystore                  | None                            |
 | Admin Password   | Postgres1234                    | MongoAdmin12                    | None                            | Redis@123456                    | KeyCloakPassW0rd                 | None                            |
 
-## PostgreSQL + PG Admin
-
- * Web UI: http://localhost:50000
- * Database URL: `postgresql://admin:Postgres1234@localhost:5432/keycloak`
- * JDBC URL: `jdbc:postgresql://localhost:5432/keycloak?user=admin&password=Postgres1234`
-
-## Mongo Cluster + Monog Express
-
-Full 3-node cluster is started and initialised with the following command:
-
-```
-bash scripts/mongo_init.sh
-```
-
- * Web UI: http://localhost:10000
- * Database url: `mongodb://admin:MongoAdmin12@localhost:10001/test`
- * Primary cluster: `localhost:10001`
- * Secondary clusters: `localhost:10002`,`localhost:10003`
- * Cluster Init script: [scripts/mongo_init.sh](scripts/mongo_init.sh)
-   * Use option `-f` to start a fresh container
- * Production ready
-
-## CockroachDB Cluster
-
-Full 3-node cluster is started and initialised with the following command:
-
-```
-bash scripts/roach_init.sh
-```
-
- * Web UI: https://localhost:20000
- * Database url: `postgresql://root@roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt`
- * JDBC url: `jdbc:postgresql://roach:26257/defaultdb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&user=root`
- * Cluster Init script: [scripts/roach_init.sh](scripts/roach_init.sh)
-   * Use option `-f` to start a fresh container
- * New user script: [scripts/roach_new_user.sh](scripts/roach_new_user.sh)
-   * Usage: `scripts/roach_new_user.sh [SQL_USER] [-d|-p [PASSWORD]]`
-   * `-d` option remove the user. Throws error is any database exists owned by this user.
-   * `-p [PASSWORD]` options take password from user as argument. If not passed in argument, password is prompted.
- * CockroachDB uses postgres network driver. Hence the urls are similar postgresql url
- * Production ready
-
-## Redis + RedisInsight
-
- * Web UI: http://localhost:40000
-
-## Keycloak
-
- * Web UI: https://localhost:50443
- * Key Store location: `/opt/keycloak/conf/server.keystore`
- * User certificates instead of key-store for production
- * Only works with PostgreSQL (Run `make postgres` to start postgres)
-
-## Monitoring (Prometheus + Grafana)
-
- * Web UI: http://localhost:30000
- * Configuration file: [configs/prometheus.yml](configs/prometheus.yml)
- * The `node-exporter` is used as data sorce
-
-## Other Scripts
+## Scripts
 
  * `make up` or simply `make` will start all the containers
  * `make down` will take down all the containers
@@ -93,5 +33,3 @@ bash scripts/roach_init.sh
    * `make cleanall` will clean unsued images along with volumes and networks
  * [Localhost certificate](scripts/localhost_certs.sh)
    * `make cert` generate localhost certificates in `./certs` directory
-
-
