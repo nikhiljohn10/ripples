@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+
+  registry:
+    image: registry:2.8.1
+    container_name: registry
+    hostname: registry
+    restart: unless-stopped
+    volumes:
+      - ./certs:/certs
+      - ./registry_htpasswd:/auth/htpasswd
+      - ./config.yml:/etc/docker/registry/config.yml
+      - registry-data:/var/lib/registry
+    ports:
+      - 21443:21443
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  registry-data:

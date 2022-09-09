@@ -4,7 +4,7 @@ DC_FILES=$(shell find . -type f -name "docker-compose.yml" -exec echo {} +)
 help: ## Display help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 
-up: postgres mongo roach redis keycloak monitor ## Start all containers in series
+up: mongo roach keycloak monitor registry ## Start all containers in series
 
 down: ## Take down all composed conatiners
 	@for dc_file in $(DC_FILES); do\
@@ -31,10 +31,13 @@ roach: ## Starts CockroachDB service
 redis: ## Starts Redis service
 	@cd redis && docker compose up -d
 
-keycloak: ## Starts Keycloak service
+keycloak: postgres ## Starts Keycloak service
 	@cd keycloak && docker compose up -d --build
 
 monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor
+registry: redis ## Starts Docker Registry
+	@cd registry && ./init.sh
+
+.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry

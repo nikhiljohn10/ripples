@@ -1,0 +1,56 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+  accesslog:
+    disabled: true
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  cache:
+    blobdescriptor: redis # inmemory
+  delete:
+    enabled: true
+auth:
+  htpasswd:
+    realm: basic-realm
+    path: /auth/htpasswd
+  # token:
+  #   realm: token-realm
+  #   service: token-service
+  #   issuer: registry-token-issuer
+  #   rootcertbundle: /root/certs/bundle
+http:
+  addr: 0.0.0.0:21443
+  host: https://localhost:20443
+  tls:
+    certificate: /certs/cert.pem
+    key: /certs/key.pem
+  headers:
+    X-Content-Type-Options: [nosniff]
+  # debug:
+  #   addr: localhost:21001
+  #   prometheus:
+  #     enabled: true
+  #     path: /metrics
+# reporting:
+#   newrelic:
+#     licensekey: newreliclicensekey
+#     name: registryinfo
+#     verbose: true
+redis:
+  addr: redis:6379
+  password: Redis@123456
+  db: 0
+  dialtimeout: 10ms
+  readtimeout: 10ms
+  writetimeout: 10ms
+  pool:
+    maxidle: 16
+    maxactive: 64
+    idletimeout: 300s
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3
