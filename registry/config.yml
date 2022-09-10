@@ -24,8 +24,10 @@ http:
   addr: 0.0.0.0:21443
   host: https://localhost:20443
   tls:
-    certificate: /certs/cert.pem
-    key: /certs/key.pem
+    certificate: /certs/server.crt
+    key: /certs/server.key
+    clientcas:
+      - /certs/root_ca.crt
   headers:
     X-Content-Type-Options: [nosniff]
   # debug:

@@ -23,7 +23,7 @@ postgres: ## Starts PostgreSQL service
 	@cd postgresql && docker compose up -d
 
 mongo: ## Starts MongoDB service
-	@cd mongodb && ./init.sh
+	@cd mongo && ./init.sh
 
 roach: ## Starts CockroachDB service
 	@cd cockroachdb && ./init.sh
@@ -38,6 +38,9 @@ monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d
 
 registry: redis ## Starts Docker Registry
-	@cd registry && ./init.sh
+	@cd registry && ../scripts/step_certs_renew.sh && ./init.sh
+redis
+ca: ## Starts StepCA
+	@cd stepca && ./init.sh
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry
+.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca

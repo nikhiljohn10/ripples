@@ -3,6 +3,7 @@
 | **Registry URL** | localhost:21443 |
 |--|--|
 | **Version** | 2.8.1 |
+| **Container** | registry |
 | **Hostname** | registry |
 | **Username** | `admin` |
 | **Password** | `Registry@123` |

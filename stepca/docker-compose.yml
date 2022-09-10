@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+
+  ca:
+    image: smallstep/step-ca:0.22.0
+    container_name: stepca
+    hostname: ca
+    restart: unless-stopped
+    environment:
+      DOCKER_STEPCA_INIT_NAME: Ripples
+      DOCKER_STEPCA_INIT_DNS_NAMES: localhost,ca
+      DOCKER_STEPCA_INIT_SSH: true
+      DOCKER_STEPCA_INIT_PASSWORD: StepCA@12345
+    volumes:
+      - step-data:/home/step
+    ports:
+      - 19000:9000
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  step-data:

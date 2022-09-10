@@ -6,11 +6,5 @@ if test "$1" = "-f"; then
     docker volume prune -f
 fi
 
-# Generate localhost certificate
-bash ../scripts/step_certs.sh
-
-# Generate htpasswd file
-bash ../scripts/htpasswd.sh admin Registry@123 registry_htpasswd
-
 # Start docker stack
 docker compose up -d || exit 1
