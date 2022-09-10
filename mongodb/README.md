@@ -2,8 +2,8 @@
 
 | **Mongo URL** | `mongodb://localhost:10001/test` |
 |--|--|
-| **Version** | `5.0.11` |
-| **Hostname** | `mongo` |
+| **Version** | 5.0.11 |
+| **Hostname** | mongo |
 | **Username** | `admin` |
 | **Password** | `MongoAdmin12` |
 | **Command** | `make mongo` |
@@ -12,10 +12,10 @@
 
 | **Web UI** | http://localhost:10000 |
 |--|--|
-| **Version** | `latest` |
-| **Hostname** | `mongo-express` |
+| **Version** | latest |
+| **Hostname** | mongo-express |
 | **Username** | `express` |
-| **Password** | `MongoDB@1234	` |
+| **Password** | `MongoDB@1234` |
 
 ## Details
 
@@ -26,9 +26,9 @@ mongodb://admin:MongoAdmin12@localhost:10001/test
 
 | Node name | Host : Port | Cluster Type |
 |--|--|--|
-| mongo | `localhost:10001` | Primary |
-| mongo1 | `localhost:10002` | Secondary |
-| mongo2 | `localhost:10003` | Secondary |
+| mongo | localhost:10001 | Primary |
+| mongo1 | localhost:10002 | Secondary |
+| mongo2 | localhost:10003 | Secondary |
 
   * Cluster Init script: [scripts/mongo_init.sh](scripts/mongo_init.sh)
     * Use option `-f` to start a fresh container

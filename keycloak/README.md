@@ -2,8 +2,8 @@
 
 | **Web UI** | https://localhost:50443 |
 |--|--|
-| **Version** | `19.0.1` |
-| **Hostname** | `keycloak` |
+| **Version** | 19.0.1 |
+| **Hostname** | keycloak |
 | **Username** | `admin` |
 | **Password** | `Keycloak@123` |
 | **Command** | `make keycloak` |

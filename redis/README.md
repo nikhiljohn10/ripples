@@ -2,8 +2,8 @@
 
 | **Redis URL** | `redis://localhost:6379` |
 |--|--|
-| **Version** | `7.0.4` |
-| **Hostname** | `redis` |
+| **Version** | 7.0.4 |
+| **Hostname** | redis |
 | **Username** | `default` |
 | **Password** | `Redis@123456` |
 | **Command** | `make redis` |
@@ -12,8 +12,8 @@
 
 | **Web UI** | http://localhost:40000 |
 |--|--|
-| **Version** | `1.13.0` |
-| **Hostname** | `redisinsight` |
+| **Version** | 1.13.0 |
+| **Hostname** | redisinsight |
 
 ## Troubleshoot
 

@@ -2,8 +2,8 @@
 
 | **Web UI** | https://localhost:20000 |
 |--|--|
-| **Version** | `v22.1.6` |
-| **Hostname** | `roach` |
+| **Version** | v22.1.6 |
+| **Hostname** | roach |
 | **Username** | `roach` |
 | **Password** | `Cockroach123` |
 | **DB URL** | `postgresql://localhost:26257/exampledb?sslmode=verify-full&options=--cluster%3Droach-intrusion` |

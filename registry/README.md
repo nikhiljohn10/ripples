@@ -1,9 +1,9 @@
 # Docker Registry
 
-| **Registry URL** | `localhost:21443` |
+| **Registry URL** | localhost:21443 |
 |--|--|
-| **Version** | `2.8.1` |
-| **Hostname** | `registry` |
+| **Version** | 2.8.1 |
+| **Hostname** | registry |
 | **Username** | `admin` |
 | **Password** | `Registry@123` |
 | **Command** | `make registry` |
