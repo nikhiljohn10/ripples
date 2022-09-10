@@ -17,7 +17,7 @@ docker run --rm -it \
     -v $(pwd)/certs:/cockroach/temp_certs:rw \
     --entrypoint bash cockroachdb:v22.1.6-local -c \
     'cp certs/ca.crt certs/client.root.* temp_certs/ && \
-    chown -Rf $HOST_UID:$HOST_GID temp_certs' || exit 1
+    chown -Rf $HOST_UID:$HOST_GID /cockroach/temp_certs' || exit 1
 
 # Initialise Cluster
 docker compose exec roach cockroach \

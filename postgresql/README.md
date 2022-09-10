@@ -3,6 +3,7 @@
 | **PG URL** | `postgresql://localhost:5432` |
 |--|--|
 | **Version** | 14.5 |
+| **Container** | postgresql |
 | **Hostname** | postgres |
 | **Username** | `admin` |
 | **Password** | `Postgres1234` |
@@ -25,6 +26,7 @@ jdbc:postgresql://localhost:5432/keycloak?user=admin&password=Postgres1234
 | **Admin URL** | http://localhost:50000 |
 |--|--|
 | **Version** | 6.13 |
+| **Container** | pgadmin |
 | **Hostname** | pgadmin |
 | **Email** | `admin@pgadmin.org` |
 | **Password** | `PGAdmin@1234` |

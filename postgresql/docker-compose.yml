@@ -3,7 +3,7 @@ version: '3.9'
 services:
   postgres:
     image: postgres:14.5
-    container_name: postgres
+    container_name: postgresql
     hostname: postgres
     environment:
       POSTGRES_USER: admin

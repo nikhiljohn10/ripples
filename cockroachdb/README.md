@@ -3,6 +3,7 @@
 | **Web UI** | https://localhost:20000 |
 |--|--|
 | **Version** | v22.1.6 |
+| **Container** | cockroachdb |
 | **Hostname** | roach |
 | **Username** | `roach` |
 | **Password** | `Cockroach123` |
@@ -11,11 +12,11 @@
 
 ## Details
 
-| Node name | Cluster Type |
-|--|--|
-| roach | Primary |
-| roach1 | Secondary |
-| roach2 | Secondary |
+| Node name | Cluster Type | Container |
+|--|--|--|
+| roach | Primary | cockroachdb |
+| roach1 | Secondary | cockroachdb-1 |
+| roach2 | Secondary | cockroachdb-2 |
 
  Database URL: 
  ```

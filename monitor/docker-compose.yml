@@ -50,7 +50,7 @@ services:
 
   grafana:
     image: grafana/grafana-oss:9.1.2
-    container_name: grafana
+    container_name: monitor
     hostname: grafana
     restart: unless-stopped
     user: '104'

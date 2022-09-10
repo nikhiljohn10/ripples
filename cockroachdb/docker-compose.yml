@@ -3,9 +3,9 @@ version: '3.9'
 services:
   roach:
     image: cockroachdb:v22.1.6-local
-    container_name: roach
+    container_name: cockroachdb
     hostname: roach
-    build: 
+    build:
       context: Dockerfiles
       dockerfile: roach.dockerfile
     environment:
@@ -28,7 +28,7 @@ services:
 
   roach-1:
     image: cockroachdb:v22.1.6-local
-    container_name: roach-1
+    container_name: cockroachdb-1
     hostname: roach-1
     environment:
       NODE_HOSTNAME: roach-1
@@ -49,7 +49,7 @@ services:
 
   roach-2:
     image: cockroachdb:v22.1.6-local
-    container_name: roach-2
+    container_name: cockroachdb-2
     hostname: roach-2
     environment:
       NODE_HOSTNAME: roach-2

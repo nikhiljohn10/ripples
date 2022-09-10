@@ -3,6 +3,7 @@
 | **Web UI** | https://localhost:50443 |
 |--|--|
 | **Version** | 19.0.1 |
+| **Container** | keycloak |
 | **Hostname** | keycloak |
 | **Username** | `admin` |
 | **Password** | `Keycloak@123` |

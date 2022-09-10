@@ -3,6 +3,7 @@
 | **Redis URL** | `redis://localhost:6379` |
 |--|--|
 | **Version** | 7.0.4 |
+| **Container** | redis |
 | **Hostname** | redis |
 | **Username** | `default` |
 | **Password** | `Redis@123456` |
@@ -13,6 +14,7 @@
 | **Web UI** | http://localhost:40000 |
 |--|--|
 | **Version** | 1.13.0 |
+| **Container** | redisinsight |
 | **Hostname** | redisinsight |
 
 ## Troubleshoot

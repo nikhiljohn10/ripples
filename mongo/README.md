@@ -3,6 +3,7 @@
 | **Mongo URL** | `mongodb://localhost:10001/test` |
 |--|--|
 | **Version** | 5.0.11 |
+| **Container** | mongo |
 | **Hostname** | mongo |
 | **Username** | `admin` |
 | **Password** | `MongoAdmin12` |
@@ -13,6 +14,7 @@
 | **Web UI** | http://localhost:10000 |
 |--|--|
 | **Version** | latest |
+| **Container** | mongo-express |
 | **Hostname** | mongo-express |
 | **Username** | `express` |
 | **Password** | `MongoDB@1234` |
