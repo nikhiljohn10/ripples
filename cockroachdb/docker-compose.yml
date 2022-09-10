@@ -18,18 +18,11 @@ services:
         --cluster-name=roach-intrusion
         --join=roach,roach-1,roach-2
     restart: on-failure
-        # --advertise-addr=roach
     volumes:
       - roach-data:/cockroach/cockroach-data
     ports:
       - 26257:26257
       - 20000:8080
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "-k", "https://localhost:20000"]
-    #   interval: 1m30s
-    #   timeout: 5s
-    #   retries: 2
-    #   start_period: 5s
     networks:
       - docker-networks
 
@@ -47,7 +40,6 @@ services:
         --cluster-name=roach-intrusion
         --join=roach,roach-1,roach-2
     restart: on-failure
-        # --advertise-addr=roach-1
     volumes:
       - roach-1-data:/cockroach/cockroach-data
     depends_on:
@@ -69,7 +61,6 @@ services:
         --cluster-name=roach-intrusion
         --join=roach,roach-1,roach-2
     restart: on-failure
-        # --advertise-addr=roach-2
     volumes:
       - roach-2-data:/cockroach/cockroach-data
     depends_on:

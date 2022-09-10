@@ -1,11 +1,16 @@
 # Docker Registry
 
-**Registry URL**: https://localhost:21443
-
-Docker commands:
- * Login: `docker login localhost:21443`
- * Logout: `docker logout localhost:21443`
-
-| Username | Password |
+| **Registry URL** | `localhost:21443` |
 |--|--|
-| `admin` | `Registry@123` |
+| **Version** | `2.8.1` |
+| **Hostname** | `registry` |
+| **Username** | `admin` |
+| **Password** | `Registry@123` |
+| **Command** | `make registry` |
+
+## Docker commands
+
+|  |  |
+|--|--|
+| Login | `docker login localhost:21443` |
+| Logout | `docker logout localhost:21443` |
