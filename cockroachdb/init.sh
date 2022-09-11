@@ -2,7 +2,7 @@
 
 # Remove old containers and volumes if `-f` option given
 if test "$1" = "-f"; then
-    docker compose down 2>/dev/null && \
+    docker compose down 2>/dev/null
     docker volume prune -f
 fi
 

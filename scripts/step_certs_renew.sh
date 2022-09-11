@@ -9,7 +9,7 @@ fi
 VERSION="0.22.0"
 DOCKER_NETWORK="docker-networks"
 CA_URL="https://ca:9000"
-CA_FINGERPRINT=$(docker exec ca step certificate fingerprint certs/root_ca.crt)
+CA_FINGERPRINT=$(docker exec stepca step certificate fingerprint certs/root_ca.crt)
 
 docker run --rm -it --network $DOCKER_NETWORK -u root \
     -e HOST_UID=$(id -u $(whoami)) \
