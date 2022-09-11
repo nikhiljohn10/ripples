@@ -5,7 +5,7 @@
   * [PostgreSQL + PG Admin](/postgresql)
   * [Mongo Cluster + Monog Express](/mongo)
   * [CockroachDB Cluster](/cockroachdb)
-  * [Redis + RedisInsight](/redis)
+  * [Redis Cluster + RedisInsight](/redis)
   * [Keycloak](/keycloak)
   * [Monitoring (Prometheus + Grafana)](/monitor)
   * [Docker Registry](/registry)

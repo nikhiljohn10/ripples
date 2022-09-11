@@ -1,36 +1,20 @@
-# Redis
+# Redis 3/3 Cluster
 
-| **Redis URL** | `redis://localhost:6379` |
+| **Redis URL** | `redis://172.40.1.0:6379` |
 |--|--|
 | **Version** | 7.0.4 |
 | **Container** | redis |
 | **Hostname** | redis |
-| **Username** | `default` |
+| **Username** | `red` |
 | **Password** | `Redis@123456` |
 | **Command** | `make redis` |
 
 ## Redis Insight
 
-| **Web UI** | http://localhost:40000 |
+| **Web UI** | http://172.40.10.0:40000 |
 |--|--|
 | **Version** | 1.13.0 |
 | **Container** | redisinsight |
-| **Hostname** | redisinsight |
-
-## Troubleshoot
-
-If your container might use more than the RAM given, use the following dockerfile:
-
-```Dockerfile
-FROM redis:7.0.4
-
-WORKDIR /data
-
-RUN sysctl vm.overcommit_memory=1
-
-VOLUME ["/data"]
-
-CMD ["redis-server", "/etc/redis/redis.conf"]
-
-EXPOSE 6379
-```
+| **Host:Port** | 172.40.1.0:6379 |
+| **Username** | `admin` |
+| **Password** | `4ENaV85jZWlxrlWnDzvB4JyJ` |

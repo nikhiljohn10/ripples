@@ -29,7 +29,7 @@ roach: ## Starts CockroachDB service
 	@cd cockroachdb && ./init.sh
 
 redis: ## Starts Redis service
-	@cd redis && docker compose up -d
+	@cd redis && ./init.sh
 
 keycloak: postgres ## Starts Keycloak service
 	@cd keycloak && docker compose up -d --build
@@ -39,8 +39,11 @@ monitor: ## Starts Monitoring service
 
 registry: redis ## Starts Docker Registry
 	@cd registry && ../scripts/step_certs_renew.sh && ./init.sh
-redis
+
 ca: ## Starts StepCA
 	@cd stepca && ./init.sh
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca
+rootca: ## Display Root CA Certificate
+	@docker exec ca cat /home/step/certs/root_ca.crt
+
+.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca rootca
