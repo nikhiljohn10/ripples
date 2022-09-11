@@ -9,13 +9,18 @@ services:
     command: >
       start
         --optimized
+        --hostname=localhost
         --https-port=50443
         --db-username=admin
         --db-password=Postgres1234
         --db-url=jdbc:postgresql://postgres:5432/keycloak
+        --https-certificate-file=/certs/server.crt
+        --https-certificate-key-file=/certs/server.key
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: Keycloak@123
+    volumes:
+      - ./certs:/certs
     ports:
       - 50443:50443
     networks:

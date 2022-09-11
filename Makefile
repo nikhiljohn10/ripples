@@ -32,7 +32,7 @@ redis: ## Starts Redis service
 	@cd redis && ./init.sh
 
 keycloak: postgres ## Starts Keycloak service
-	@cd keycloak && docker compose up -d --build
+	@cd keycloak && ./init.sh
 
 monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d
