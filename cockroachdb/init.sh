@@ -27,7 +27,7 @@ docker compose exec roach cockroach \
 echo "Cluster is initialized successfully" ||
 echo "Cluster has already been initialized"
 
-$(pwd)/new_user.sh roach -p 'Cockroach123'
+$(pwd)/new_user.sh -a -c -u 'roach' -p 'Cockroach123'
 
 cat << EOF
 

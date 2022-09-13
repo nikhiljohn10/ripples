@@ -1,14 +1,17 @@
 #!/usr/bin/env bash
 
-if test "$1" = "-h"; then
+show_help() {
    echo "Usage: $(basename $0) USERNAME PASSWORD FILENAME"
-   exit 0
+}
+
+if test "$1" = "-h"; then
+   show_help && exit 0
 fi
 
 if test -z "$1" -o -z "$2" -o -z "$3"; then
    echo "Error: Invalid format"
    echo
-   echo "Usage: $(basename $0) USERNAME PASSWORD FILENAME"
+   show_help
    echo
    exit 1
 fi

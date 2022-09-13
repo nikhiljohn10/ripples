@@ -15,12 +15,18 @@ fi
 # Generate certificate
 if !(test -d "$(pwd)/certs"); then
     mkdir -p certs
-    openssl genpkey -genparam -algorithm DH -out certs/redis.dh
-    bash ../scripts/step_certs.sh
+    openssl genpkey -genparam -algorithm DH -out certs/redis.dh ||  exit 1
+    bash ../scripts/step_certs.sh -h redis
     chmod -Rf 777 ./certs/*
 fi
 
 ROOT_CA=$(cat ./certs/root_ca.crt)
+
+if test -z "$ROOT_CA"; then
+    docker compose down
+    rm -rf ./certs;
+    exit 1
+fi
 
 setup_cluster() {
     docker exec redis bash -c \

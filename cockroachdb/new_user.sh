@@ -1,37 +1,116 @@
 #!/usr/bin/env bash
 
-if (test -z "$1"); then
-    echo "Error: Missing argument."
-    echo "    Usage: $(basename $0) [SQL_USER] [-d|-p [PASSWORD]]"
-    echo "The command will create the user"
-    echo "Option '-d' will delete the user"
-    echo "Option '-p' will ask for user password"
-    exit 1
+USERNAME=""
+PASSWORD=""
+SHOW_URL=""
+DETETE_USER=""
+FILENAME="$0"
+SQL_USER_ROLES=""
+SQL_ROLE_CREATEDB=""
+SQL_ROLE_VIEWACTIVITY=""
+UTILS_SOURCE="$(pwd)/scripts/utidls.sh"
+
+if !(test -f $UTILS_SOURCE); then
+    UTILS_SOURCE=$(find ~ -name utils.sh -type f -print -quit)
+    test -z $UTILS_SOURCE && \
+        echo "Unable to file 'utils.sh'" && exit 1
 fi
+. $UTILS_SOURCE
 
-USER_NAME=$1
+show_help() {
+    echo "Usage: $(basename $FILENAME) -u SQL_USER -p [PASSWORD] [-s|-d]"
+    echo "  Option '-u' will create the user"
+    echo "  Option '-p' will ask for user password"
+    echo "  Option '-c' will add user role of CREATEDB"
+    echo "  Option '-c' will add user role of CREATEDB"
+    echo "  Option '-a' will show urls"
+    echo "  Option '-d' will delete the user"
+    echo "  Option '-s' will show urls"
+    echo "  Option '-h' will show help"
+}
 
-if (test "$USER_NAME" = "admin" -o "$USER_NAME" = "root"); then
-    echo "You are not allowed to access administrative users."
-    exit 1
-fi
+parser_args() {
+    while (($# > 0)); do
+        OPTION=$1
+        case $OPTION in
+            -u)
+                !(is_empty "$USERNAME") && error_exit "Option Error: Duplicate username option"
+                if is_empty "$2"; then
+                    read_user
+                else
+                    USERNAME="$2"
+                    shift
+                fi
+            ;;
+            -p)
+                !(is_empty "$PASSWORD") && error_exit "Option Error: Duplicate password option"
+                if is_empty "$2"; then
+                    PASSWORD="true"
+                else
+                    PASSWORD="$2"
+                    shift
+                fi
+            ;;
+            -c)
+                SQL_ROLE_CREATEDB="true"
+            ;;
+            -a)
+                SQL_ROLE_VIEWACTIVITY="true"
+            ;;
+            -s)
+                SHOW_URL="true"
+            ;;
+            -d)
+                DETETE_USER="true"
+            ;;
+            -h)
+                show_help
+            ;;
+            *)
+                error_exit "Invalid option: $OPTION"
+            ;;
+        esac
+        shift
+    done
+}
 
-SQL_COMMAND="CREATE USER $USER_NAME WITH CREATEDB VIEWACTIVITY"
-
-if test "$2" = "-d"; then
-    SQL_COMMAND="DROP USER IF EXISTS $USER_NAME"
-elif test "$2" = "-p"; then
-    if test -z "$3"; then
-        echo -n "Password: "
-        read -s USER_PASSWORD
-        echo -ne "\033[2K\r"
-    else
-        USER_PASSWORD=$3
+build_sql_command() {
+    if is_true "$DETETE_USER"; then
+        SQL_COMMAND="DROP USER IF EXISTS $USERNAME"
+        return 0
     fi
-    SQL_COMMAND="$SQL_COMMAND PASSWORD '$USER_PASSWORD'"
+    SQL_COMMAND="CREATE USER $USERNAME"
+    if (is_true $SQL_ROLE_CREATEDB || is_true $SQL_ROLE_VIEWACTIVITY || !(is_empty "$PASSWORD")); then
+        is_true $SQL_ROLE_CREATEDB && SQL_USER_ROLES="$SQL_USER_ROLES CREATEDB"
+        is_true $SQL_ROLE_VIEWACTIVITY && SQL_USER_ROLES="$SQL_USER_ROLES VIEWACTIVITY"
+        is_empty "$PASSWORD" || SQL_USER_ROLES="$SQL_USER_ROLES PASSWORD '$PASSWORD'"
+        SQL_COMMAND="$SQL_COMMAND WITH$SQL_USER_ROLES;"
+        return 0
+    fi
+    SQL_COMMAND="$SQL_COMMAND;"
+}
+
+# Parse commandline arguments
+parser_args $@
+
+# Username if not given
+is_empty "$USERNAME" && read_user
+is_true "$PASSWORD" && read_pass
+
+# Avoid admin users
+test "$USERNAME" = "admin" -o "$USERNAME" = "root" && \
+    error_exit "You are not allowed to access administrative users."
+
+# Create SQL query
+build_sql_command
+
+# Generate client certificate
+if is_true "$DETETE_USER"; then
+    rm -rf certs/roach/client.$USERNAME.* && \
+    echo "Deleted certificate of $USERNAME"
 else
     docker run --rm -it \
-        -e NEW_SQL_USER=$USER_NAME \
+        -e NEW_SQL_USER=$USERNAME \
         -e HOST_UID=$(id -u $(whoami)) \
         -e HOST_GID=$(id -g $(whoami)) \
         -v $(pwd)/certs:/cockroach/temp_certs:rw \
@@ -40,18 +119,23 @@ else
                 --certs-dir=certs/ \
                 --ca-key=certs/ca.key && \
             cp -f certs/client.$NEW_SQL_USER.* temp_certs/ && \
-            chown -Rf $HOST_UID:$HOST_GID temp_certs' || exit 1
+            chown -Rf $HOST_UID:$HOST_GID temp_certs' && \
+    echo "Geneated client certificate and key for $USERNAME" || exit 1 
 fi
 
+# Run SQL query
 docker exec roach cockroach sql \
     --certs-dir=certs/ \
     --host=roach \
-    --execute="$SQL_COMMAND;" || exit 1
+    --execute="$SQL_COMMAND" || exit 1
 
-if !(test -z "$USER_PASSWORD"); then
-    echo "DATABASE_URL=\"postgresql://$USER_NAME:$USER_PASSWORD@localhost:26257/exampledb?sslmode=verify-full&options=--cluster%3Droach-intrusion\""
-elif (test "$2" = "-d"); then
-    rm -rf certs/roach/client.$USER_NAME.*
-else
-    echo "DATABASE_URL=\"postgresql://$USER_NAME@localhost:26257/exampledb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&options=--cluster%3Droach-intrusion\""
+# Show URL
+if is_true "$SHOW_URL"; then
+    echo
+    if !(is_empty "$PASSWORD"); then
+        echo "DATABASE_URL=\"postgresql://$USERNAME:$PASSWORD@localhost:26257/exampledb?sslmode=verify-full&options=--cluster%3Droach-intrusion\""
+    else
+        echo "DATABASE_URL=\"postgresql://$USERNAME@localhost:26257/exampledb?sslcert=certs%2Fclient.root.crt&sslkey=certs%2Fclient.root.key&sslmode=verify-full&sslrootcert=certs%2Fca.crt&options=--cluster%3Droach-intrusion\""
+    fi
+    echo
 fi
