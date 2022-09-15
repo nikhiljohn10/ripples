@@ -28,7 +28,7 @@ mongo: ## Starts MongoDB service
 roach: ## Starts CockroachDB service
 	@cd cockroachdb && ./init.sh
 
-redis: ## Starts Redis service
+redis: ## Starts Redis service (Use --cluster option for cluster mode)
 	@cd redis && ./init.sh
 
 keycloak: ## Starts Keycloak service
