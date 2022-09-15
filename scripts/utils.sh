@@ -24,6 +24,14 @@ read_pass() {
     echo -ne "\033[2K\r"
 }
 
+cert_info() {
+    step certificate inspect $1 --short
+}
+
+cert_details() {
+    step certificate inspect $1
+}
+
 is_container_running() {
     if is_empty "$1"; then
         echo -n "Container name: "
