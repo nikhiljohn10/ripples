@@ -31,8 +31,8 @@ roach: ## Starts CockroachDB service
 redis: ## Starts Redis service
 	@cd redis && ./init.sh
 
-keycloak: postgres ## Starts Keycloak service
-	@cd keycloak && ./init.sh
+keycloak: ## Starts Keycloak service
+	@cd keycloak && ./init.sh -f
 
 monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d

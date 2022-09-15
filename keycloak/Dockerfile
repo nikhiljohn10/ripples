@@ -2,7 +2,7 @@ FROM quay.io/keycloak/keycloak:19.0.1 as builder
 
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
-ENV KC_FEATURES=token-exchange
+ENV KC_FEATURES=token-exchange,docker
 ENV KC_DB=postgres
 
 # Install custom providers

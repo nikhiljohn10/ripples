@@ -1,6 +1,6 @@
 # Keycloak
 
-| **Web UI** | https://localhost:50443 |
+| **Web UI** | https://localhost:60443 |
 |--|--|
 | **Version** | 19.0.1 |
 | **Container** | keycloak |

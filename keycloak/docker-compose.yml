@@ -10,7 +10,7 @@ services:
       start
         --optimized
         --hostname=localhost
-        --https-port=50443
+        --https-port=60443
         --db-username=admin
         --db-password=Postgres1234
         --db-url=jdbc:postgresql://postgres:5432/keycloak
@@ -22,7 +22,7 @@ services:
     volumes:
       - ./certs:/certs
     ports:
-      - 50443:50443
+      - 60443:60443
     networks:
       - docker-networks
 
