@@ -3,7 +3,7 @@
 | **Web UI** | https://localhost:20000 |
 |--|--|
 | **Version** | v22.1.6 |
-| **Container** | cockroachdb |
+| **Container** | roach |
 | **Hostname** | roach |
 | **Username** | `roach` |
 | **Password** | `Cockroach123` |
@@ -14,9 +14,9 @@
 
 | Node name | Cluster Type | Container |
 |--|--|--|
-| roach | Primary | cockroachdb |
-| roach1 | Secondary | cockroachdb-1 |
-| roach2 | Secondary | cockroachdb-2 |
+| roach | Primary | roach |
+| roach1 | Secondary | roach-1 |
+| roach2 | Secondary | roach-2 |
 
  Database URL: 
  ```
@@ -33,4 +33,5 @@
     * Usage: `scripts/roach_new_user.sh [SQL_USER] [-d|-p [PASSWORD]]`
     * `-d` option remove the user. Throws error is any database exists owned by this user.
     * `-p [PASSWORD]` options take password from user as argument. If not passed in argument, password is prompted.
-  * CockroachDB uses postgres network driver. Hence the urls are similar postgresql url
+  * CockroachDB uses postgres network driver. Hence the urls are similar to postgresql url.
+  * CockroachDB cluster have its own CA tools and certificates inside the built image.
