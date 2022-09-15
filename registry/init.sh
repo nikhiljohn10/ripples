@@ -7,18 +7,17 @@ clean() {
 
 generate_certificates() {
     bash ../scripts/step_certs.sh -rsa -h registry && \
-    if test -f "$(pwd)/certs/keycloak.crt"; then
-        CERTIFICATE_CONTENT=$(cat $(pwd)/certs/keycloak.crt)
+    if test -f "$(pwd)/../keycloak/certs/keycloak.crt"; then
+        cp $(pwd)/../keycloak/certs/keycloak.crt ./certs/bundle.crt
     else
         echo "Paste OAuth provider certificate: " && \
         read CERTIFICATE_CONTENT
-        echo $CERTIFICATE_CONTENT > $(pwd)/certs/keycloak.crt
-    fi
         cat <<EOF >$(pwd)/certs/bundle.crt
 -----BEGIN CERTIFICATE-----
 $(echo $CERTIFICATE_CONTENT|fold -w 64)
 -----END CERTIFICATE-----
 EOF
+    fi
     cat ./certs/root_ca.crt >> ./certs/bundle.crt
 }
 
