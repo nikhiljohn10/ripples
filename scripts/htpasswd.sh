@@ -20,5 +20,8 @@ AUTH_USERNAME=$1
 AUTH_PASSWORD=$2
 AUTH_FILENAME=$3
 
-docker run --rm --entrypoint htpasswd httpd:2 -Bbn \
-   $AUTH_USERNAME $AUTH_PASSWORD > $(pwd)/$AUTH_FILENAME
+if !(which htpasswd >/dev/null 2>&1); then
+   sudo apt update && sudo apt install -y apache2-utils
+fi
+mkdir -p $(pwd)/secrets
+htpasswd -Bbn $AUTH_USERNAME $AUTH_PASSWORD > $(pwd)/secrets/$AUTH_FILENAME
