@@ -11,9 +11,11 @@ storage:
   delete:
     enabled: true
 auth:
-  htpasswd:
-    realm: basic-realm
-    path: /etc/docker/registry/htpasswd
+  token:
+    realm: https://localhost:60443/realms/registry/protocol/docker-v2/auth
+    service: registry-client
+    issuer: https://localhost:60443/realms/registry
+    rootcertbundle: /certs/bundle.crt
 http:
   addr: 0.0.0.0:21000
   host: http://localhost:21000

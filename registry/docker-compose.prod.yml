@@ -1,0 +1,62 @@
+version: '3.9'
+
+services:
+
+  registry:
+    image: registry:2.8.1
+    container_name: registry
+    restart: unless-stopped
+    volumes:
+      - ./certs:/certs
+      - ./config.prod.yml:/etc/docker/registry/config.yml
+      - registry-data:/var/lib/registry
+    ports:
+      - 21000:21000
+    networks:
+      - docker-networks
+
+  # portainer:
+  #   image: portainer/portainer-ce:2.15.0
+  #   container_name: portainer
+  #   restart: unless-stopped
+  #   # privileged: true
+  #   command: >
+  #     --sslcert /certs/server.crt
+  #     --sslkey /certs/server.key
+  #   volumes:
+  #     - ./certs:/certs
+  #     - portainer-data:/data
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   ports:
+  #     - 30080:8000
+  #     - 30443:9443
+  #   networks:
+  #     - docker-networks
+
+  # crane:
+  #   image: parabuzzle/craneoperator:2.2.5
+  #   container_name: crane
+  #   restart: unless-stopped
+  #   environment:
+  #     TITLE: Ripples Registry
+  #     REGISTRY_PROTOCOL: http
+  #     REGISTRY_HOST: localhost
+  #     REGISTRY_PORT: 21000
+  #     ALLOW_REGISTRY_LOGIN: true
+  #     SSL_VERIFY: false
+      # SSL_CERT_FILE: /certs/root_ca.crt
+      # SESSION_SECRET: CALGUag4Ccmjx6BoGLMTHN7Wmhr7z5Lo
+    # volumes:
+    #   - ./certs:/certs
+    # ports:
+    #   - 22000:80
+    # networks:
+    #   - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks
+
+volumes:
+  registry-data:
+  # portainer-data:

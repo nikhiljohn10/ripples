@@ -1,0 +1,46 @@
+version: 0.1
+log:
+  fields:
+    service: registry
+  accesslog:
+    disabled: true
+storage:
+  filesystem:
+    rootdirectory: /var/lib/registry
+  cache:
+    blobdescriptor: redis
+  delete:
+    enabled: true
+auth:
+  token:
+    realm: https://localhost:60443/realms/registry/protocol/docker-v2/auth
+    service: registry-client
+    issuer: https://localhost:60443/realms/registry
+    rootcertbundle: /certs/bundle.crt
+http:
+  addr: 0.0.0.0:21000
+  host: https://localhost:21000
+  tls:
+    certificate: /certs/server.crt
+    key: /certs/server.key
+    clientcas:
+      - /certs/bundle.crt
+  headers:
+    X-Content-Type-Options: [nosniff]
+redis:
+  addr: localhost:6379
+  username: admin
+  password: 4ENaV85jZWlxrlWnDzvB4JyJ
+  db: 0
+  dialtimeout: 10ms
+  readtimeout: 10ms
+  writetimeout: 10ms
+  pool:
+    maxidle: 16
+    maxactive: 64
+    idletimeout: 300s
+health:
+  storagedriver:
+    enabled: true
+    interval: 10s
+    threshold: 3

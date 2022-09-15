@@ -20,7 +20,7 @@ cleanall: ## Remove all unused images, volumes and networks
 reset: down clean ## Reset docker to blank state (Warning: Erase all data)
 
 postgres: ## Starts PostgreSQL service
-	@cd postgres && ./init.sh -f
+	@cd postgres && ./init.sh
 
 mongo: ## Starts MongoDB service
 	@cd mongo && ./init.sh
@@ -32,18 +32,22 @@ redis: ## Starts Redis service
 	@cd redis && ./init.sh
 
 keycloak: ## Starts Keycloak service
-	@cd keycloak && ./init.sh -f
+	@cd keycloak && ./init.sh
 
 monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d
 
-registry: redis ## Starts Docker Registry
-	@cd registry && ../scripts/step_certs_renew.sh && ./init.sh
+registry: ## Starts Docker Registry
+	@cd registry && ./init.sh --oauth
 
 ca: ## Starts StepCA
 	@cd stepca && ./init.sh
 
-rootca: ## Display Root CA Certificate
-	@docker exec ca cat /home/step/certs/root_ca.crt
+bootstrap: ## Bootstrap CA certificate in host machine
+	@bash ./stepca/bootstrap_host.sh
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca rootca
+docker-login: ## Login to local docker registry
+	@docker logout localhost:21000
+	@echo "Registry@123" | docker login localhost:21000 -u captain --password-stdin
+
+.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca bootstrap docker-login
