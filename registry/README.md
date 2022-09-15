@@ -42,6 +42,6 @@
 
 Resolution: Remove `certs` folder and run `make registry` again
 
-### Want to run without keycloak
+### Want to run registry without keycloak
 
 Resolution: Edit `Makefile`'s `registry` command and remove `--oauth` option. Then it will use htpasswd to authenticate.

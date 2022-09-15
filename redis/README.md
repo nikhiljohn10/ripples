@@ -18,3 +18,10 @@
 | **Host:Port** | 172.40.1.0:6379 |
 | **Username** | `admin` |
 | **Password** | `4ENaV85jZWlxrlWnDzvB4JyJ` |
+
+## Init Script
+
+| Option | Description |
+|--|--|
+| `-f` | Remove old containers and volumes |
+| `--cluster` | Create multiple redis nodes and cluster them together |

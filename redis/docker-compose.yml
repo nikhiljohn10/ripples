@@ -6,12 +6,10 @@ services:
     image: redis:7.0.4
     container_name: redis
     restart: unless-stopped
-    # network_mode: host
     privileged: true
     command: >
       /etc/redis/redis.conf
       --tls-port 6379
-      --cluster-config-file node_6379.conf
     volumes:
       - ./certs:/certs
       - redis-data:/data
@@ -19,93 +17,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      redis-network:
-        ipv4_address: 172.40.1.0
-
-  redis-1:
-    image: redis:7.0.4
-    container_name: redis-1
-    restart: unless-stopped
-    privileged: true
-    command: >
-      /etc/redis/redis.conf
-      --tls-port 6381
-      --cluster-config-file node_6381.conf
-    volumes:
-      - ./certs:/certs
-      - redis-data-1:/data
-      - ./redis.conf:/etc/redis/redis.conf
-    networks:
-      redis-network:
-        ipv4_address: 172.40.1.1
-
-  redis-2:
-    image: redis:7.0.4
-    container_name: redis-2
-    restart: unless-stopped
-    privileged: true
-    command: >
-      /etc/redis/redis.conf
-      --tls-port 6382
-      --cluster-config-file node_6382.conf
-    volumes:
-      - ./certs:/certs
-      - redis-data-2:/data
-      - ./redis.conf:/etc/redis/redis.conf
-    networks:
-      redis-network:
-        ipv4_address: 172.40.1.2
-
-  redis-3:
-    image: redis:7.0.4
-    container_name: redis-3
-    restart: unless-stopped
-    privileged: true
-    command: >
-      /etc/redis/redis.conf
-      --tls-port 6383
-      --cluster-config-file node_6383.conf
-    volumes:
-      - ./certs:/certs
-      - redis-data-3:/data
-      - ./redis.conf:/etc/redis/redis.conf
-    networks:
-      redis-network:
-        ipv4_address: 172.40.1.3
-
-  redis-4:
-    image: redis:7.0.4
-    container_name: redis-4
-    restart: unless-stopped
-    privileged: true
-    command: >
-      /etc/redis/redis.conf
-      --tls-port 6384
-      --cluster-config-file node_6384.conf
-    volumes:
-      - ./certs:/certs
-      - redis-data-4:/data
-      - ./redis.conf:/etc/redis/redis.conf
-    networks:
-      redis-network:
-        ipv4_address: 172.40.1.4
-
-  redis-5:
-    image: redis:7.0.4
-    container_name: redis-5
-    restart: unless-stopped
-    privileged: true
-    command: >
-      /etc/redis/redis.conf
-      --tls-port 6385
-      --cluster-config-file node_6385.conf
-    volumes:
-      - ./certs:/certs
-      - redis-data-5:/data
-      - ./redis.conf:/etc/redis/redis.conf
-    networks:
-      redis-network:
-        ipv4_address: 172.40.1.5
+      - docker-networks
 
   redisinsight:
     image: redislabs/redisinsight:1.13.0
@@ -117,29 +29,13 @@ services:
       - redisinsight-data:/db
     depends_on:
       - redis
-      - redis-1
-      - redis-2
-      - redis-3
-      - redis-4
-      - redis-5
     networks:
-      redis-network:
-        ipv4_address: 172.40.10.0
+      - docker-networks
 
 networks:
-  redis-network:
-    name: redis-network
-    ipam:
-      driver: default
-      config:
-        - subnet: 172.40.0.0/16
-          gateway: 172.40.0.1
+  docker-networks:
+    name: docker-networks
 
 volumes:
   redis-data:
-  redis-data-1:
-  redis-data-2:
-  redis-data-3:
-  redis-data-4:
-  redis-data-5:
   redisinsight-data:
