@@ -3,7 +3,7 @@
 | **PG URL** | `postgresql://localhost:5432` |
 |--|--|
 | **Version** | 14.5 |
-| **Container** | postgresql |
+| **Container** | postgres |
 | **Hostname** | postgres |
 | **Username** | `admin` |
 | **Password** | `Postgres1234` |

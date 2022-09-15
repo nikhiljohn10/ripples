@@ -3,14 +3,18 @@ version: '3.9'
 services:
   postgres:
     image: postgres:14.5
-    container_name: postgresql
-    hostname: postgres
+    container_name: postgres
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: Postgres1234
       POSTGRES_DB: keycloak # Change this to required db name
+    command: >
+        -c ssl=on
+        -c ssl_cert_file=/certs/server.crt
+        -c ssl_key_file=/certs/server.key
     restart: unless-stopped
     volumes:
+      - ./certs:/certs
       - pg-data:/var/lib/postgresql/data
     ports:
       - 5432:5432
@@ -25,9 +29,12 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: PGAdmin@1234
+      PGADMIN_ENABLE_TLS: True
     ports:
-      - 50000:80
+      - 50443:443
     volumes:
+      - ./certs/pga-server.crt:/certs/server.cert
+      - ./certs/pga-server.key:/certs/server.key
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres

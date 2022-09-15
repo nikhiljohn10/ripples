@@ -20,7 +20,7 @@ cleanall: ## Remove all unused images, volumes and networks
 reset: down clean ## Reset docker to blank state (Warning: Erase all data)
 
 postgres: ## Starts PostgreSQL service
-	@cd postgresql && docker compose up -d
+	@cd postgres && ./init.sh -f
 
 mongo: ## Starts MongoDB service
 	@cd mongo && ./init.sh
