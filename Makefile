@@ -37,10 +37,13 @@ keycloak: ## Starts Keycloak service
 monitor: ## Starts Monitoring service
 	@cd monitor && docker compose up -d
 
-registry: ## Starts Docker Registry
+registry: ## Starts Docker Registry service
 	@cd registry && ./init.sh --oauth
 
-ca: ## Starts StepCA
+portainer: ## Start Portainer service
+	@cd portainer &&  ./init.sh
+
+ca: ## Starts StepCA service
 	@cd stepca && ./init.sh
 
 bootstrap: ## Bootstrap CA certificate in host machine
@@ -50,4 +53,4 @@ docker-login: ## Login to local docker registry
 	@docker logout localhost:21000
 	@echo "Registry@123" | docker login localhost:21000 -u captain --password-stdin
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry ca bootstrap docker-login
+.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry portainer ca bootstrap docker-login
