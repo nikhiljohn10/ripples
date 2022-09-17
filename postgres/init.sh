@@ -9,8 +9,8 @@ fi
 # Remove old containers and volumes if `-f` option given
 if test "$1" = "-f"; then
     docker compose down 2>/dev/null
-    docker volume rm postgres_pg-data -f
-    docker volume rm postgres_pgadmin-data -f
+    docker volume rm postgres_data -f
+    docker volume rm postgres_admin_data -f
     rm -rf ./certs
 fi
 

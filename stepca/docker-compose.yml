@@ -13,7 +13,7 @@ services:
       DOCKER_STEPCA_INIT_SSH: true
       DOCKER_STEPCA_INIT_PASSWORD: StepCA@12345
     volumes:
-      - step-data:/home/step
+      - data:/home/step
     ports:
       - 19000:9000
     networks:
@@ -24,4 +24,4 @@ networks:
     name: docker-networks
 
 volumes:
-  step-data:
+  data:
