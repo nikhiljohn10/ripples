@@ -13,13 +13,15 @@ cat <<EOF
 
 Admin UI:
 
-URL:        https://localhost:50443
+URL:        http://localhost:18000
 
 Databse connection:
 
-Hostname:   mysql
+System:     MySQL
+Server:     mysql
 Port:       3306
 Username:   mysql
 Password:   Mysql12345
+Database:   mydb
 
 EOF
