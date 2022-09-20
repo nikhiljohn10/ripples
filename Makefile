@@ -22,6 +22,9 @@ reset: down clean ## Reset docker to blank state (Warning: Erase all data)
 postgres: ## Starts PostgreSQL service
 	@cd postgres && ./init.sh
 
+mysql: ## Starts MySQL service
+	@cd mysql && ./init.sh
+
 mongo: ## Starts MongoDB service
 	@cd mongo && ./init.sh
 
@@ -53,4 +56,4 @@ docker-login: ## Login to local docker registry
 	@docker logout localhost:21000
 	@echo "Registry@123" | docker login localhost:21000 -u captain --password-stdin
 
-.PHONY: help up down clean cleanall reset postgres mongo roach redis keycloak monitor registry portainer ca bootstrap docker-login
+.PHONY: help up down clean cleanall reset postgres mysql mongo roach redis keycloak monitor registry portainer ca bootstrap docker-login
