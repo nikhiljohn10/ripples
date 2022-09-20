@@ -9,7 +9,7 @@ services:
     volumes:
       - ./config.yml:/etc/docker/registry/config.yml
       - ./secrets/registry_htpasswd:/etc/docker/registry/htpasswd
-      - registry-data:/var/lib/registry
+      - data:/var/lib/registry
     ports:
       - 21000:21000
     networks:
@@ -20,4 +20,4 @@ networks:
     name: docker-networks
 
 volumes:
-  registry-data:
+  data:
