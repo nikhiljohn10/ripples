@@ -9,9 +9,7 @@ services:
       POSTGRES_PASSWORD: Postgres1234
       POSTGRES_DB: keycloak # Change this to required db name
     command: >
-        -c ssl=on
-        -c ssl_cert_file=/certs/server.crt
-        -c ssl_key_file=/certs/server.key
+      -c ssl=on -c ssl_cert_file=/certs/server.crt -c ssl_key_file=/certs/server.key
     restart: unless-stopped
     volumes:
       - ./certs:/certs
@@ -22,7 +20,7 @@ services:
       - docker-networks
 
   pgadmin:
-    image: dpage/pgadmin4:6.13
+    image: dpage/pgadmin4:6.14
     container_name: pgadmin
     hostname: pgadmin
     restart: unless-stopped
