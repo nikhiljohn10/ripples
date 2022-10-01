@@ -19,6 +19,8 @@ cleanall: ## Remove all unused images, volumes and networks
 
 reset: down clean ## Reset docker to blank state (Warning: Erase all data)
 
+.PHONY: help up down clean cleanall reset
+
 postgres: ## Starts PostgreSQL service
 	@cd postgres && ./init.sh
 
@@ -49,6 +51,8 @@ portainer: ## Start Portainer service
 ca: ## Starts StepCA service
 	@cd stepca && ./init.sh
 
+.PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca
+
 bootstrap: ## Bootstrap CA certificate in host machine
 	@bash ./stepca/bootstrap_host.sh
 
@@ -56,4 +60,4 @@ docker-login: ## Login to local docker registry
 	@docker logout localhost:21000
 	@echo "Registry@123" | docker login localhost:21000 -u captain --password-stdin
 
-.PHONY: help up down clean cleanall reset postgres mysql mongo roach redis keycloak monitor registry portainer ca bootstrap docker-login
+.PHONY: bootstrap docker-login
