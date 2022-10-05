@@ -8,4 +8,4 @@ bash ./stepca/install.sh
 rm -Rf $(step path)
 step ca bootstrap --ca-url $CA_URL --fingerprint $CA_FINGERPRINT
 step certificate install --all $(step path)/certs/root_ca.crt
-cp -f $(step path)/certs/root_ca.crt ~/Documents/ca.crt
+cp -f $(step path)/certs/root_ca.crt ~/step_ca.crt
