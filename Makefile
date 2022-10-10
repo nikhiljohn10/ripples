@@ -52,6 +52,9 @@ ca: ## Starts StepCA service
 	@cd stepca && ./init.sh
 
 .PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca
+basic: ca portainer
+
+.PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca basic
 
 bootstrap: ## Bootstrap CA certificate in host machine
 	@bash ./stepca/bootstrap_host.sh
