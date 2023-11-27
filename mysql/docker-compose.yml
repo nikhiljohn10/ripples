@@ -27,6 +27,7 @@ services:
       - mysql
     networks:
       - docker-networks
+    dns: 127.0.0.1
 
 networks:
   docker-networks:

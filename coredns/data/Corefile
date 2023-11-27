@@ -1,0 +1,12 @@
+. {
+    forward . /etc/resolv.conf
+    reload 5s 2s
+    log
+    errors
+}
+
+ripples:53 {
+    file /data/db.ripples
+    log
+    errors
+}

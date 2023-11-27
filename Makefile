@@ -48,13 +48,19 @@ registry: ## Starts Docker Registry service
 portainer: ## Start Portainer service
 	@cd portainer &&  ./init.sh
 
+dns: ## Start CoreDNS service
+	@cd coredns && docker compose up -d
+
 ca: ## Starts StepCA service
 	@cd stepca && ./init.sh
 
-.PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca
+caddy: ## Start Caddy service
+	@cd caddy && ./init.sh
+
 basic: ca portainer
 
 .PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca basic
+.PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer dns ca caddy basic
 
 bootstrap: ## Bootstrap CA certificate in host machine
 	@bash ./stepca/bootstrap_host.sh

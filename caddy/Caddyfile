@@ -1,0 +1,47 @@
+{
+    email me@nikz.in
+    acme_ca https://ca:9000/acme/acme/directory
+    log {
+        output stdout
+    }
+}
+
+localhost {
+    respond "Hello caddy!"
+}
+
+caddy {
+    respond "Hello caddy!"
+}
+
+ripples {
+    respond "Welcome to Ripples!"
+}
+
+caddy.ripples {
+    respond "Welcome to Ripples in Caddy!"
+}
+
+# caddy.internal {
+#     respond "Hello caddy!"
+# }
+
+# ca {
+#     respond "Hello ca!"
+# }
+
+# adminer {
+#     respond "Hello adminer!"
+# }
+
+# hi {
+#     respond "Hi!"
+# }
+
+# hello {
+#     respond "Hello!"
+# }
+
+# dnsserver.internal {
+#     respond "Hello dnsserver!"
+# }

@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+
+  caddy:
+    image: caddy:2.5.2-local
+    build: .
+    container_name: caddy
+    restart: unless-stopped
+    volumes:
+      - ./Caddyfile:/caddy/Caddyfile
+    ports:
+      - 80:80
+      - 443:443
+      - 443:443/udp
+      - 2019:2019
+    networks:
+      - docker-networks
+
+networks:
+  docker-networks:
+    name: docker-networks

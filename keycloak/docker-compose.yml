@@ -9,11 +9,6 @@ services:
     command: >
       start
         --optimized
-        --hostname=localhost
-        --https-port=60443
-        --db-username=admin
-        --db-password=Postgres1234
-        --db-url=jdbc:postgresql://postgres:5432/keycloak
         --https-certificate-file=/certs/server.crt
         --https-certificate-key-file=/certs/server.key
     environment:

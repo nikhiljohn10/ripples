@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+
+  coredns:
+    image: coredns/coredns:1.10.0
+    container_name: coredns
+    restart: always
+    network_mode: host
+    command: -conf /data/Corefile -dns.port 53
+    ports:
+      - 127.0.0.1:53:53
+      - 127.0.0.1:53:53/udp
+    cap_add:
+      - NET_BIND_SERVICE
+    volumes:
+      - ./data:/data
+      - config:/etc/coredns
+    dns:
+      - 1.1.1.1
+      - 8.8.8.8
+
+# networks:
+#   docker-networks:
+#     name: docker-networks
+
+volumes:
+  config:

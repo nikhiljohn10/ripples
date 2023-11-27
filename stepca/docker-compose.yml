@@ -5,11 +5,11 @@ services:
   ca:
     image: smallstep/step-ca:0.22.0
     container_name: stepca
-    hostname: ca
+    hostname: ca.ripples
     restart: unless-stopped
     environment:
       DOCKER_STEPCA_INIT_NAME: Ripples
-      DOCKER_STEPCA_INIT_DNS_NAMES: localhost,ca
+      DOCKER_STEPCA_INIT_DNS_NAMES: localhost,ca,ca.ripples
       DOCKER_STEPCA_INIT_SSH: true
       DOCKER_STEPCA_INIT_PASSWORD: StepCA@12345
     volumes:

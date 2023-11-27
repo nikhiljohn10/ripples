@@ -1,0 +1,16 @@
+$ORIGIN ripples.
+$TTL 1h
+
+; ====================== Resource Records =====================
+
+@	        IN	SOA     dns.ripples. admin.ripples. (
+                        2017042745      ; serial
+                        1d              ; refresh
+                        1h              ; retry
+                        2w              ; expire
+                        1h)             ; minimum
+
+@	        IN  NS      dns.ripples.
+            IN  A       172.28.0.3
+dns         IN  A       127.0.0.1
+ca          IN  A       172.28.0.2

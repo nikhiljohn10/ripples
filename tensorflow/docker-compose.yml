@@ -1,0 +1,42 @@
+services:
+  tensorflow:
+    container_name: data-science
+    image: nvcr.io/nvidia/tensorflow:23.02-tf2-py3
+    runtime: nvidia
+    restart: unless-stopped
+    command: >
+      jupyter lab
+      --ip 0.0.0.0
+      --allow-root
+      --no-browser
+      --autoreload
+    network_mode: bridge
+    environment:
+      - JUPYTER_TOKEN=dockertoken
+      - RESTARTABLE=yes
+      - TF_GPU_ALLOCATOR=cuda_malloc_async
+      - TF_CPP_MIN_LOG_LEVEL=2
+    volumes:
+      - ./workspace:/workspace
+      - jupyter-data:/root/.jupyter
+      - keras-data:/root/.keras
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    devices:
+      - /dev/video0:/dev/video0
+    shm_size: 1gb
+    ipc: host
+    privileged: true
+    ulimits:
+      stack: 67108864
+      memlock: -1
+    ports:
+      - 80:8888
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+volumes:
+  jupyter-data:
+  keras-data:

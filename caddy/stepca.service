@@ -1,0 +1,14 @@
+[Unit]
+Description=Automated certificate management
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=mmalone
+ExecStart=/usr/bin/step ca renew --daemon /home/mmalone/foo.crt /home/mmalone/foo.key
+
+[Install]
+WantedBy=multi-user.target

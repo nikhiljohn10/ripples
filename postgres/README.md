@@ -36,6 +36,7 @@ jdbc:postgresql://localhost:5432/keycloak?user=admin&password=Postgres1234
 ## Load Test
 
 ```
+sudo apt install postgresql-contrib
 pgbench -U admin -h localhost -p 5432 -i -s 50 test
 pgbench -U admin -h localhost -p 5432 -c 10 -j 2 -t 10000 test
 ```

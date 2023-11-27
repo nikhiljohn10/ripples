@@ -1,2 +1,12 @@
 **/secrets/*
 **/certs/*
+tensorflow/cert
+tensorflow/workspace
+data-science/data
+data-science/dataset
+data-science/work
+**/.ipynb_checkpoints
+**/*.crt
+**/*.cert
+**/*.pem
+**/*.key
