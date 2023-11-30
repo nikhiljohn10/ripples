@@ -1,7 +1,7 @@
 services:
   tensorflow:
-    container_name: data-science
-    image: nvcr.io/nvidia/tensorflow:23.02-tf2-py3
+    container_name: tensorflow
+    image: nvcr.io/nvidia/tensorflow:23.10-tf2-py3
     runtime: nvidia
     restart: unless-stopped
     command: >
@@ -17,9 +17,9 @@ services:
       - TF_GPU_ALLOCATOR=cuda_malloc_async
       - TF_CPP_MIN_LOG_LEVEL=2
     volumes:
-      - ./workspace:/workspace
       - jupyter-data:/root/.jupyter
       - keras-data:/root/.keras
+      - ./workspace:/workspace
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
     devices:
       - /dev/video0:/dev/video0

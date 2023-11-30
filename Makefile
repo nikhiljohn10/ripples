@@ -59,7 +59,6 @@ caddy: ## Start Caddy service
 
 basic: ca portainer
 
-.PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer ca basic
 .PHONY: postgres mysql mongo roach redis keycloak monitor registry portainer dns ca caddy basic
 
 bootstrap: ## Bootstrap CA certificate in host machine
@@ -69,4 +68,7 @@ docker-login: ## Login to local docker registry
 	@docker logout localhost:21000
 	@echo "Registry@123" | docker login localhost:21000 -u captain --password-stdin
 
-.PHONY: bootstrap docker-login
+tensorflow: ## Start Tensorflow with Jupyter Notebook
+	@cd tensorflow && ./init.sh
+
+.PHONY: bootstrap docker-login tensorflow

@@ -1,6 +1,6 @@
 **/secrets/*
 **/certs/*
-tensorflow/cert
+**/cert/*
 tensorflow/workspace
 data-science/data
 data-science/dataset
@@ -10,3 +10,4 @@ data-science/work
 **/*.cert
 **/*.pem
 **/*.key
+.vscode/
