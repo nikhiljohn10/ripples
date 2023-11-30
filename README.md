@@ -12,6 +12,7 @@
 - [Docker Registry](/registry)
 - [Portainer](/portainer)
 - [StepCA](/stepca)
+- [Tensorflow](/tensorflow)
 
 ## Makefile
 
